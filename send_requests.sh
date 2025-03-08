@@ -1,6 +1,5 @@
 #!/bin/bash
-
-INVOKE_URL=https://xxxxxxx.amazonaws.com
+INVOKE_URL=https://w4ds5wzuol.execute-api.us-east-1.amazonaws.com #changed with current terraform apply output
 
 # add movies
 echo "> add movies"

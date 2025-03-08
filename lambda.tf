@@ -14,7 +14,10 @@ resource "aws_lambda_function" "http_api_lambda" {
   role             = aws_iam_role.lambda_exec.arn
 
   environment {
-    variables = {} # todo: fill with apporpriate value
+    variables = {
+      DDB_TABLE=aws_dynamodb_table.table.name #we change this
+
+    } 
   }
 }
 
@@ -37,15 +40,20 @@ resource "aws_iam_role" "lambda_exec" {
 
 resource "aws_iam_policy" "lambda_exec_role" {
   name = "${local.name_prefix}-topmovies-api-ddbaccess"
-
+#we add policy like getitem, putitem,delete etc.
   policy = <<POLICY
-{
+{ 
     "Version": "2012-10-17",
-    "Statement": [
-        {
+    "Statement": [        {
             "Effect": "Allow",
             "Action": [
-                "dynamodb:GetItem"
+            
+                "dynamodb:PutItem",
+                "dynamodb:GetItem",
+                 "dynamodb:Scan",
+                 "dynamodb:DeleteItem"
+
+
             ],
             "Resource": "${aws_dynamodb_table.table.arn}"
         },
